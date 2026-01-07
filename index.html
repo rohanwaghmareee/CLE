@@ -228,10 +228,8 @@ th{color:#c9a24d}
   </div>
 </section>
 
-<!-- FLOATING ADMIN ACCESS -->
 <div class="admin-fab" onclick="openLogin()">Admin</div>
 
-<!-- LOGIN MODAL -->
 <div id="loginModal">
   <div class="login-box">
     <h3>Admin Login</h3>
@@ -241,12 +239,12 @@ th{color:#c9a24d}
   </div>
 </div>
 
-<!-- ADMIN PANEL -->
 <div id="adminPanel">
   <h2>Admin Dashboard</h2>
   <button onclick="exportCSV()">Export CSV</button>
   <button onclick="clearAll()">Clear All</button>
   <button onclick="logout()">Logout</button>
+
   <table>
     <thead>
       <tr>
@@ -262,18 +260,31 @@ let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
 const ADMIN_USER="admin";
 const ADMIN_PASS="noirelite";
 
+/* FIXED BOOKING FUNCTION */
 function addBooking(){
-  if(!name.value||!date.value||!time.value||guests.value==="Guests"){
-    alert("Fill all details");return;
-  }
-  bookings.push({name:name.value,date:date.value,time:time.value,guests:guests.value});
-  localStorage.setItem("bookings",JSON.stringify(bookings));
-  alert("Reservation Confirmed");
-  name.value=date.value=time.value="";
-  guests.value="Guests";
+  const guestName = document.getElementById("name").value;
+  const dateVal = document.getElementById("date").value;
+  const timeVal = document.getElementById("time").value;
+  const guestCount = document.getElementById("guests").value;
+
+  bookings.push({
+    name: guestName || "—",
+    date: dateVal || "—",
+    time: timeVal || "—",
+    guests: guestCount || "—"
+  });
+
+  localStorage.setItem("bookings", JSON.stringify(bookings));
+  alert("Reservation Saved");
+
+  document.getElementById("name").value = "";
+  document.getElementById("date").value = "";
+  document.getElementById("time").value = "";
+  document.getElementById("guests").value = "Guests";
 }
 
-function openLogin(){loginModal.style.display="flex"}
+function openLogin(){ loginModal.style.display="flex"; }
+
 function login(){
   if(adminUser.value===ADMIN_USER && adminPass.value===ADMIN_PASS){
     loginModal.style.display="none";
@@ -281,7 +292,8 @@ function login(){
     renderAdmin();
   }else alert("Invalid Credentials");
 }
-function logout(){adminPanel.style.display="none"}
+
+function logout(){ adminPanel.style.display="none"; }
 
 function renderAdmin(){
   adminTable.innerHTML="";
@@ -300,16 +312,19 @@ function renderAdmin(){
     </tr>`;
   });
 }
+
 function deleteBooking(i){
   bookings.splice(i,1);
   localStorage.setItem("bookings",JSON.stringify(bookings));
   renderAdmin();
 }
+
 function clearAll(){
   bookings=[];
   localStorage.removeItem("bookings");
   renderAdmin();
 }
+
 function exportCSV(){
   let csv="Name,Date,Time,Guests\n";
   bookings.forEach(b=>csv+=`${b.name},${b.date},${b.time},${b.guests}\n`);
