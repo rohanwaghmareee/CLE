@@ -8,8 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 
 <style>
-/* ================= RESET ================= */
-*{margin:0;padding:0;box-sizing:border-box}
+*{box-sizing:border-box;margin:0;padding:0}
 body{
   font-family:'Inter',sans-serif;
   background:#050505;
@@ -17,29 +16,23 @@ body{
   overflow-x:hidden;
 }
 
-/* ================= COMMON ================= */
-button{
-  background:#c9a24d;
-  color:#000;
-  border:none;
-  border-radius:14px;
-  padding:14px;
-  font-weight:900;
-  cursor:pointer;
+/* ANIMATIONS */
+@keyframes gradientFlow{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }
-button:hover{opacity:.9}
-
-/* ================= CUSTOMER APP ================= */
-#customerApp{
-  transition:.4s;
+@keyframes floatPhone{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-18px)}
+  100%{transform:translateY(0)}
 }
-.blur{
-  filter:blur(10px);
-  pointer-events:none;
-  user-select:none;
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(25px)}
+  to{opacity:1;transform:translateY(0)}
 }
 
-/* ================= NAV ================= */
+/* NAV */
 nav{
   position:fixed;
   top:0;
@@ -48,92 +41,128 @@ nav{
   padding:18px 50px;
   display:flex;
   justify-content:space-between;
-  z-index:10;
+  z-index:100;
 }
-.logo{font-weight:900;color:#c9a24d}
-nav a{color:#888;text-decoration:none;margin-left:24px}
-nav a:hover{color:#fff}
+.logo{
+  font-weight:900;
+  font-size:22px;
+  color:#c9a24d;
+}
+.nav-links a{
+  margin-left:28px;
+  font-size:14px;
+  color:#888;
+  text-decoration:none;
+}
+.nav-links a:hover{color:#fff}
 
-/* ================= HERO ================= */
+/* HERO */
 .hero{
   padding-top:120px;
   text-align:center;
+  animation:fadeUp .8s ease;
 }
-.hero p{color:#c9a24d;font-weight:700}
+.hero p{
+  color:#c9a24d;
+  font-weight:700;
+  margin-bottom:14px;
+}
 .hero h1{
   font-size:64px;
   font-weight:900;
   letter-spacing:-2px;
 }
 
-/* ================= VISUAL ================= */
+/* VISUAL */
 .visual{
-  height:600px;
+  position:relative;
+  height:650px;
   display:flex;
   justify-content:center;
   align-items:center;
 }
+.bg-text{
+  position:absolute;
+  font-size:520px;
+  font-weight:900;
+  color:#0d0d0d;
+  letter-spacing:-40px;
+}
+.wave{
+  position:absolute;
+  width:100%;
+  height:360px;
+  background:linear-gradient(90deg,#c9a24d,#ff2e63,#6a0dad,#c9a24d);
+  background-size:200% 100%;
+  animation:gradientFlow 6s linear infinite;
+  mix-blend-mode:screen;
+  clip-path:path("M0,120 C200,260 420,40 700,150 C980,260 1250,70 1600,150 L1600,400 L0,400 Z");
+}
+
+/* PHONE */
 .phone{
-  width:320px;
+  width:340px;
   background:#000;
-  border-radius:40px;
+  border-radius:48px;
   padding:12px;
+  animation:floatPhone 6s ease-in-out infinite;
 }
 .screen{
   background:#0a0a0a;
-  border-radius:32px;
-  padding:24px;
+  border-radius:36px;
+  height:620px;
+  padding:26px;
+  display:flex;
+  flex-direction:column;
 }
 input,select{
-  width:100%;
   background:#111;
   border:1px solid #222;
   color:#fff;
+  padding:15px;
+  border-radius:14px;
+  margin-bottom:14px;
+}
+button{
   padding:14px;
-  border-radius:12px;
-  margin-bottom:12px;
+  border:none;
+  border-radius:14px;
+  background:#c9a24d;
+  color:#000;
+  font-weight:900;
+  cursor:pointer;
 }
 
-/* ================= ADMIN LOGIN MODAL ================= */
-#loginModal{
-  display:none;
+/* FLOATING ADMIN BUTTON */
+.admin-fab{
   position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.9);
-  z-index:100;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-.login-box{
-  background:#0b0b0b;
-  padding:30px;
-  border-radius:18px;
-  width:320px;
-}
-.login-box h3{
+  bottom:22px;
+  right:22px;
+  background:#0d0d0d;
   color:#c9a24d;
-  text-align:center;
-  margin-bottom:18px;
+  border:1px solid #333;
+  padding:10px 16px;
+  border-radius:30px;
+  font-size:12px;
+  cursor:pointer;
+  z-index:150;
 }
+.admin-fab:hover{background:#1a1a1a}
 
-/* ================= ADMIN ROUTE ================= */
-#adminRoute{
+/* ADMIN PANEL */
+#adminPanel{
   display:none;
-  position:fixed;
-  inset:0;
-  background:#050505;
-  z-index:200;
-  padding:40px;
-  overflow:auto;
+  max-width:900px;
+  margin:80px auto;
+  background:#080808;
+  border:1px solid #222;
+  border-radius:20px;
+  padding:30px;
 }
-#adminRoute h2{color:#c9a24d}
-
-/* ADMIN TABLE */
+#adminPanel h2{color:#c9a24d}
 table{
   width:100%;
   border-collapse:collapse;
-  margin-top:20px;
 }
 th,td{
   padding:12px;
@@ -141,28 +170,38 @@ th,td{
 }
 th{color:#c9a24d}
 
-/* ADMIN HEADER */
-.admin-header{
+/* LOGIN MODAL */
+#loginModal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
   display:flex;
-  justify-content:space-between;
+  justify-content:center;
   align-items:center;
+  z-index:200;
+}
+.login-box{
+  background:#0b0b0b;
+  padding:32px;
+  border-radius:18px;
+  width:320px;
+}
+.login-box h3{
+  color:#c9a24d;
+  text-align:center;
   margin-bottom:20px;
 }
-.admin-actions button{margin-left:10px}
 </style>
 </head>
 
 <body>
 
-<!-- ================= CUSTOMER APP ================= -->
-<div id="customerApp">
-
 <nav>
   <div class="logo">NOIR ÉLITE</div>
-  <div>
+  <div class="nav-links">
     <a href="#">Menu</a>
     <a href="#">Reserve</a>
-    <a href="#" onclick="openLogin()">Admin</a>
   </div>
 </nav>
 
@@ -172,6 +211,8 @@ th{color:#c9a24d}
 </section>
 
 <section class="visual">
+  <div class="bg-text">NOIR</div>
+  <div class="wave"></div>
   <div class="phone">
     <div class="screen">
       <h3 style="color:#c9a24d">Reserve a Table</h3>
@@ -187,9 +228,10 @@ th{color:#c9a24d}
   </div>
 </section>
 
-</div>
+<!-- FLOATING ADMIN ACCESS -->
+<div class="admin-fab" onclick="openLogin()">Admin</div>
 
-<!-- ================= LOGIN MODAL ================= -->
+<!-- LOGIN MODAL -->
 <div id="loginModal">
   <div class="login-box">
     <h3>Admin Login</h3>
@@ -199,17 +241,12 @@ th{color:#c9a24d}
   </div>
 </div>
 
-<!-- ================= ADMIN ROUTE ================= -->
-<div id="adminRoute">
-  <div class="admin-header">
-    <h2>Admin Dashboard</h2>
-    <div class="admin-actions">
-      <button onclick="exportCSV()">Export CSV</button>
-      <button onclick="clearAll()">Clear All</button>
-      <button onclick="logout()">Logout</button>
-    </div>
-  </div>
-
+<!-- ADMIN PANEL -->
+<div id="adminPanel">
+  <h2>Admin Dashboard</h2>
+  <button onclick="exportCSV()">Export CSV</button>
+  <button onclick="clearAll()">Clear All</button>
+  <button onclick="logout()">Logout</button>
   <table>
     <thead>
       <tr>
@@ -221,15 +258,13 @@ th{color:#c9a24d}
 </div>
 
 <script>
-/* ================= DATA ================= */
 let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
 const ADMIN_USER="admin";
 const ADMIN_PASS="noirelite";
 
-/* ================= BOOKINGS ================= */
 function addBooking(){
-  if(!name.value || !date.value || !time.value || guests.value==="Guests"){
-    alert("Fill all details"); return;
+  if(!name.value||!date.value||!time.value||guests.value==="Guests"){
+    alert("Fill all details");return;
   }
   bookings.push({name:name.value,date:date.value,time:time.value,guests:guests.value});
   localStorage.setItem("bookings",JSON.stringify(bookings));
@@ -238,24 +273,16 @@ function addBooking(){
   guests.value="Guests";
 }
 
-/* ================= LOGIN FLOW ================= */
-function openLogin(){
-  loginModal.style.display="flex";
-}
+function openLogin(){loginModal.style.display="flex"}
 function login(){
   if(adminUser.value===ADMIN_USER && adminPass.value===ADMIN_PASS){
     loginModal.style.display="none";
-    customerApp.classList.add("blur");
-    adminRoute.style.display="block";
+    adminPanel.style.display="block";
     renderAdmin();
   }else alert("Invalid Credentials");
 }
-function logout(){
-  adminRoute.style.display="none";
-  customerApp.classList.remove("blur");
-}
+function logout(){adminPanel.style.display="none"}
 
-/* ================= ADMIN ================= */
 function renderAdmin(){
   adminTable.innerHTML="";
   if(bookings.length===0){
@@ -274,21 +301,16 @@ function renderAdmin(){
   });
 }
 function deleteBooking(i){
-  if(confirm("Delete booking?")){
-    bookings.splice(i,1);
-    localStorage.setItem("bookings",JSON.stringify(bookings));
-    renderAdmin();
-  }
+  bookings.splice(i,1);
+  localStorage.setItem("bookings",JSON.stringify(bookings));
+  renderAdmin();
 }
 function clearAll(){
-  if(confirm("Delete ALL bookings?")){
-    bookings=[];
-    localStorage.removeItem("bookings");
-    renderAdmin();
-  }
+  bookings=[];
+  localStorage.removeItem("bookings");
+  renderAdmin();
 }
 function exportCSV(){
-  if(bookings.length===0){alert("No bookings");return;}
   let csv="Name,Date,Time,Guests\n";
   bookings.forEach(b=>csv+=`${b.name},${b.date},${b.time},${b.guests}\n`);
   const a=document.createElement("a");
@@ -300,4 +322,3 @@ function exportCSV(){
 
 </body>
 </html>
-
