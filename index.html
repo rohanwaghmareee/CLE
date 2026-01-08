@@ -2,21 +2,23 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Noir Élite — Cinematic Dining</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 
 <style>
+/* --- 1. CORE THEME --- */
 *{box-sizing:border-box;margin:0;padding:0}
 body{
   font-family:'Inter',sans-serif;
   background:#050505;
   color:#eaeaea;
   overflow-x:hidden;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ANIMATIONS */
+/* --- ANIMATIONS --- */
 @keyframes gradientFlow{
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
@@ -24,7 +26,7 @@ body{
 }
 @keyframes floatPhone{
   0%{transform:translateY(0)}
-  50%{transform:translateY(-18px)}
+  50%{transform:translateY(-10px)}
   100%{transform:translateY(0)}
 }
 @keyframes fadeUp{
@@ -32,61 +34,83 @@ body{
   to{opacity:1;transform:translateY(0)}
 }
 
-/* NAV */
+/* --- NAVIGATION --- */
 nav{
   position:fixed;
   top:0;
   width:100%;
-  background:#000;
+  background:rgba(0,0,0,0.95);
   padding:18px 50px;
   display:flex;
   justify-content:space-between;
+  align-items: center;
   z-index:100;
+  border-bottom: 1px solid #111;
+  backdrop-filter: blur(10px);
 }
 .logo{
   font-weight:900;
   font-size:22px;
   color:#c9a24d;
+  user-select: none;
 }
 .nav-links a{
   margin-left:28px;
   font-size:14px;
   color:#888;
   text-decoration:none;
+  transition: 0.3s;
 }
-.nav-links a:hover{color:#fff}
+.nav-links a:hover{color:#c9a24d}
 
-/* HERO */
+/* --- CUSTOMER VIEW --- */
+#customerView {
+    display: block;
+    padding-top:100px;
+    padding-bottom: 50px;
+}
+
 .hero{
-  padding-top:120px;
   text-align:center;
   animation:fadeUp .8s ease;
+  margin-bottom: 40px;
+  padding: 0 20px;
 }
 .hero p{
   color:#c9a24d;
   font-weight:700;
-  margin-bottom:14px;
+  margin-bottom:10px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 .hero h1{
   font-size:64px;
   font-weight:900;
   letter-spacing:-2px;
+  line-height: 1.1;
 }
 
-/* VISUAL */
+/* VISUAL CONTAINER */
 .visual{
   position:relative;
-  height:650px;
+  min-height:650px;
   display:flex;
   justify-content:center;
   align-items:center;
+  padding: 20px;
 }
 .bg-text{
   position:absolute;
-  font-size:520px;
+  font-size:400px;
   font-weight:900;
   color:#0d0d0d;
-  letter-spacing:-40px;
+  letter-spacing:-20px;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
 }
 .wave{
   position:absolute;
@@ -99,98 +123,187 @@ nav{
   clip-path:path("M0,120 C200,260 420,40 700,150 C980,260 1250,70 1600,150 L1600,400 L0,400 Z");
 }
 
-/* PHONE */
+/* PHONE CARD */
 .phone{
-  width:340px;
+  width:360px;
+  max-width: 100%;
   background:#000;
-  border-radius:48px;
+  border-radius:40px;
   padding:12px;
   animation:floatPhone 6s ease-in-out infinite;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+  border: 1px solid #222;
+  position: relative;
+  z-index: 10;
 }
 .screen{
   background:#0a0a0a;
-  border-radius:36px;
-  height:620px;
-  padding:26px;
+  border-radius:30px;
+  height:auto;
+  min-height: 550px;
+  padding:30px 24px;
   display:flex;
   flex-direction:column;
+  position: relative;
 }
+
+/* INPUTS */
 input,select{
-  background:#111;
+  background:#161616;
   border:1px solid #222;
   color:#fff;
-  padding:15px;
-  border-radius:14px;
-  margin-bottom:14px;
+  padding:16px;
+  border-radius:12px;
+  margin-bottom:16px;
+  outline: none;
+  font-family: inherit;
+  font-size: 16px; /* Prevents zoom on iPhone */
+  width: 100%;
+  -webkit-appearance: none; /* Removes default styling on iOS */
 }
-button{
-  padding:14px;
+input:focus, select:focus{
+    border-color: #c9a24d;
+    background: #000;
+}
+select {
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23c9a24d%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px top 50%;
+    background-size: 12px auto;
+}
+
+.btn-primary{
+  padding:18px;
   border:none;
-  border-radius:14px;
+  border-radius:12px;
   background:#c9a24d;
   color:#000;
-  font-weight:900;
+  font-weight:800;
   cursor:pointer;
+  margin-top: 20px;
+  font-size: 16px;
+  transition: 0.2s;
+  width: 100%;
+}
+.btn-primary:active{ transform: scale(0.96); }
+
+/* --- ADMIN TRIGGER (The Secret Button) --- */
+.admin-trigger-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid #333;
+    color: #666;
+    font-size: 10px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 700;
+    transition: 0.3s;
+}
+.admin-trigger-btn:hover {
+    border-color: #c9a24d;
+    color: #c9a24d;
+    background: rgba(201, 162, 77, 0.1);
 }
 
-/* FLOATING ADMIN BUTTON */
-.admin-fab{
-  position:fixed;
-  bottom:22px;
-  right:22px;
-  background:#0d0d0d;
-  color:#c9a24d;
-  border:1px solid #333;
-  padding:10px 16px;
-  border-radius:30px;
-  font-size:12px;
-  cursor:pointer;
-  z-index:150;
-}
-.admin-fab:hover{background:#1a1a1a}
-
-/* ADMIN PANEL */
-#adminPanel{
-  display:none;
-  max-width:900px;
-  margin:80px auto;
-  background:#080808;
-  border:1px solid #222;
-  border-radius:20px;
-  padding:30px;
-}
-#adminPanel h2{color:#c9a24d}
-table{
-  width:100%;
-  border-collapse:collapse;
-}
-th,td{
-  padding:12px;
-  border-bottom:1px solid #222;
-}
-th{color:#c9a24d}
-
-/* LOGIN MODAL */
+/* --- LOGIN MODAL --- */
 #loginModal{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.85);
+  background:rgba(0,0,0,.95);
   display:flex;
   justify-content:center;
   align-items:center;
-  z-index:200;
+  z-index:999;
+  padding: 20px;
 }
 .login-box{
   background:#0b0b0b;
-  padding:32px;
-  border-radius:18px;
-  width:320px;
+  padding:30px;
+  border-radius:24px;
+  width:100%;
+  max-width: 350px;
+  border: 1px solid #333;
+  text-align: center;
+  box-shadow: 0 0 50px rgba(201, 162, 77, 0.1);
 }
-.login-box h3{
-  color:#c9a24d;
-  text-align:center;
-  margin-bottom:20px;
+.login-box h3{ color:#c9a24d; margin-bottom:24px; font-size: 20px; }
+.close-modal{ margin-top: 20px; background: transparent; border:none; color: #666; cursor: pointer; text-decoration: underline; padding: 10px; }
+
+/* --- ADMIN DASHBOARD --- */
+#adminView{
+  display:none;
+  padding-top: 100px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-bottom: 50px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.admin-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.admin-header h2{ font-size: 28px; color: #fff; }
+.admin-header span{ color: #c9a24d; }
+
+.admin-controls{
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+.btn-admin{
+    background: #1a1a1a;
+    color: #fff;
+    border: 1px solid #333;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    flex: 1; /* Buttons stretch on mobile */
+    min-width: 120px;
+    font-size: 14px;
+}
+.btn-admin:hover{ background: #c9a24d; color: #000; border-color:#c9a24d; }
+
+.table-container{
+    background: #0a0a0a;
+    border: 1px solid #222;
+    border-radius: 20px;
+    overflow-x: auto; /* Enable horizontal scroll on mobile */
+    -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
+}
+table{ width:100%; border-collapse:collapse; min-width: 600px; /* Force scroll if too small */ }
+th,td{ padding:16px; text-align: left; border-bottom:1px solid #1a1a1a; white-space: nowrap; }
+th{ background: #111; color:#c9a24d; font-size: 12px; text-transform: uppercase; }
+td{ color: #aaa; font-size: 14px; }
+.delete-btn{ background: transparent; color: #ff2e63; border: 1px solid #333; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; }
+
+/* --- MOBILE RESPONSIVENESS (Media Queries) --- */
+@media (max-width: 768px) {
+    nav { padding: 15px 20px; }
+    .logo { font-size: 18px; }
+    
+    .hero h1 { font-size: 42px; letter-spacing: -1px; }
+    .hero { margin-bottom: 20px; }
+    
+    .visual { padding: 10px; min-height: auto; padding-bottom: 80px; }
+    .bg-text { font-size: 150px; opacity: 0.05; }
+    
+    .phone { width: 100%; }
+    .screen { padding: 25px 20px; min-height: auto; }
+    
+    .admin-header h2 { font-size: 24px; }
+    .admin-controls button { font-size: 13px; padding: 10px; }
 }
 </style>
 </head>
@@ -205,110 +318,159 @@ th{color:#c9a24d}
   </div>
 </nav>
 
-<section class="hero">
-  <p>Michelin-Inspired Fine Dining</p>
-  <h1>Where Darkness<br>Meets Perfection</h1>
-</section>
+<div id="customerView">
+    <section class="hero">
+      <p>Michelin-Inspired Fine Dining</p>
+      <h1>Where Darkness<br>Meets Perfection</h1>
+    </section>
 
-<section class="visual">
-  <div class="bg-text">NOIR</div>
-  <div class="wave"></div>
-  <div class="phone">
-    <div class="screen">
-      <h3 style="color:#c9a24d">Reserve a Table</h3>
-      <input id="name" placeholder="Guest Name">
-      <input id="date" type="date">
-      <input id="time" type="time">
-      <select id="guests">
-        <option>Guests</option>
-        <option>1</option><option>2</option><option>3</option><option>4+</option>
-      </select>
-      <button onclick="addBooking()">Confirm Reservation</button>
-    </div>
-  </div>
-</section>
+    <section class="visual">
+      <div class="bg-text">NOIR</div>
+      <div class="wave"></div>
+      <div class="phone">
+        <div class="screen">
+          
+          <button class="admin-trigger-btn" onclick="openLogin()">Admin</button>
 
-<div class="admin-fab" onclick="openLogin()">Admin</div>
+          <h3 style="color:#c9a24d; margin-bottom: 20px; margin-top: 30px; font-weight: 800; font-size: 24px;">Reserve a Table</h3>
+          
+          <input id="name" placeholder="Guest Name" autocomplete="off">
+          <input id="date" type="date">
+          <input id="time" type="time">
+          <select id="guests">
+            <option>Guests</option>
+            <option>1</option><option>2</option><option>3</option><option>4+</option>
+          </select>
+          <button class="btn-primary" onclick="addBooking()">Confirm Reservation</button>
+        </div>
+      </div>
+    </section>
+</div>
 
 <div id="loginModal">
   <div class="login-box">
     <h3>Admin Login</h3>
-    <input id="adminUser" placeholder="Username">
+    <input id="adminUser" placeholder="Username" autocomplete="off">
     <input id="adminPass" type="password" placeholder="Password">
-    <button onclick="login()">Login</button>
+    <button class="btn-primary" onclick="login()">Access Dashboard</button>
+    <button class="close-modal" onclick="closeLogin()">Cancel</button>
   </div>
 </div>
 
-<div id="adminPanel">
-  <h2>Admin Dashboard</h2>
-  <button onclick="exportCSV()">Export CSV</button>
-  <button onclick="clearAll()">Clear All</button>
-  <button onclick="logout()">Logout</button>
+<div id="adminView">
+    <div class="admin-header">
+        <h2>Dashboard <span>//</span> Overview</h2>
+        <div>
+            <p style="color: #666; font-size: 12px; text-align:right;">STATUS</p>
+            <p style="color: #c9a24d; font-weight:bold;">Live</p>
+        </div>
+    </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th><th>Date</th><th>Time</th><th>Guests</th><th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="adminTable"></tbody>
-  </table>
+    <div class="admin-controls">
+        <button class="btn-admin" onclick="exportCSV()">Download CSV</button>
+        <button class="btn-admin" onclick="clearAll()">Clear Data</button>
+        <button class="btn-admin" onclick="logout()" style="background: #220a0a; border-color: #551111; color: #ff4444;">Logout</button>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th>Guest Name</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Party</th>
+                <th style="text-align: right;">Action</th>
+            </tr>
+            </thead>
+            <tbody id="adminTable"></tbody>
+        </table>
+    </div>
 </div>
 
 <script>
+/* LOGIC */
 let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
 const ADMIN_USER="admin";
 const ADMIN_PASS="noirelite";
 
-/* FIXED BOOKING FUNCTION */
+const customerView = document.getElementById("customerView");
+const adminView = document.getElementById("adminView");
+const loginModal = document.getElementById("loginModal");
+const adminTable = document.getElementById("adminTable");
+
 function addBooking(){
   const guestName = document.getElementById("name").value;
   const dateVal = document.getElementById("date").value;
   const timeVal = document.getElementById("time").value;
   const guestCount = document.getElementById("guests").value;
 
+  if(!guestName || !dateVal) { 
+      alert("Please enter details first."); 
+      return; 
+  }
+
   bookings.push({
-    name: guestName || "—",
-    date: dateVal || "—",
-    time: timeVal || "—",
-    guests: guestCount || "—"
+    name: guestName,
+    date: dateVal,
+    time: timeVal,
+    guests: guestCount
   });
 
   localStorage.setItem("bookings", JSON.stringify(bookings));
-  alert("Reservation Saved");
-
+  alert("Reservation Confirmed!");
+  
   document.getElementById("name").value = "";
   document.getElementById("date").value = "";
   document.getElementById("time").value = "";
-  document.getElementById("guests").value = "Guests";
 }
 
-function openLogin(){ loginModal.style.display="flex"; }
+function openLogin(){ 
+    loginModal.style.display="flex"; 
+}
+
+function closeLogin(){
+    loginModal.style.display="none";
+    document.getElementById("adminPass").value = ""; 
+}
 
 function login(){
-  if(adminUser.value===ADMIN_USER && adminPass.value===ADMIN_PASS){
-    loginModal.style.display="none";
-    adminPanel.style.display="block";
-    renderAdmin();
-  }else alert("Invalid Credentials");
+  const u = document.getElementById("adminUser").value;
+  const p = document.getElementById("adminPass").value;
+
+  if(u===ADMIN_USER && p===ADMIN_PASS){
+    loginModal.style.display="none"; 
+    customerView.style.display="none";
+    adminView.style.display="block";
+    renderAdmin(); 
+  }else{
+    alert("Wrong Password!");
+  }
 }
 
-function logout(){ adminPanel.style.display="none"; }
+function logout(){
+    if(confirm("Logout?")){
+        customerView.style.display="block";
+        adminView.style.display="none";
+        document.getElementById("adminUser").value = "";
+        document.getElementById("adminPass").value = "";
+    }
+}
 
 function renderAdmin(){
   adminTable.innerHTML="";
   if(bookings.length===0){
-    adminTable.innerHTML="<tr><td colspan='5'>No bookings</td></tr>";
+    adminTable.innerHTML="<tr><td colspan='5' style='text-align:center; padding: 30px; color:#555;'>No bookings yet.</td></tr>";
     return;
   }
   bookings.forEach((b,i)=>{
     adminTable.innerHTML+=`
     <tr>
-      <td>${b.name}</td>
+      <td style="color:#fff; font-weight:600">${b.name}</td>
       <td>${b.date}</td>
       <td>${b.time}</td>
       <td>${b.guests}</td>
-      <td><button onclick="deleteBooking(${i})">❌</button></td>
+      <td style="text-align: right;"><button class="delete-btn" onclick="deleteBooking(${i})">Remove</button></td>
     </tr>`;
   });
 }
@@ -320,9 +482,11 @@ function deleteBooking(i){
 }
 
 function clearAll(){
-  bookings=[];
-  localStorage.removeItem("bookings");
-  renderAdmin();
+  if(confirm("Delete all data?")){
+    bookings=[];
+    localStorage.removeItem("bookings");
+    renderAdmin();
+  }
 }
 
 function exportCSV(){
