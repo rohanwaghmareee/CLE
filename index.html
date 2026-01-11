@@ -7,31 +7,58 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 
 <style>
-/* --- 1. CORE THEME --- */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* --- CSS VARIABLES (THEME ENGINE) --- */
+:root {
+    /* DEFAULT: DARK THEME (NOIR) */
+    --bg-body: #050505;
+    --text-main: #eaeaea;
+    --text-muted: #888;
+    --accent: #c9a24d;
+    --nav-bg: rgba(0,0,0,0.95);
+    --nav-border: #111;
+    --card-bg: #000;
+    --card-border: #222;
+    --screen-bg: #0a0a0a;
+    --input-bg: #161616;
+    --input-border: #222;
+    --input-text: #fff;
+    --wave-opacity: 1;
+    --hero-heading: #fff;
+    --admin-btn-bg: rgba(255,255,255,0.05);
+    --admin-btn-text: #666;
+    --shadow-color: rgba(0,0,0,0.6);
+}
+
+[data-theme="light"] {
+    /* LIGHT THEME (BLANC) */
+    --bg-body: #f8f5f0;
+    --text-main: #333;
+    --text-muted: #666;
+    --accent: #c9a24d;
+    --nav-bg: rgba(255,255,255,0.95);
+    --nav-border: #e5e5e5;
+    --card-bg: #fff;
+    --card-border: #eaeaea;
+    --screen-bg: #f9f9f9;
+    --input-bg: #fff;
+    --input-border: #e0e0e0;
+    --input-text: #333;
+    --wave-opacity: 0.15;
+    --hero-heading: #1a1a1a;
+    --admin-btn-bg: rgba(0,0,0,0.05);
+    --admin-btn-text: #888;
+    --shadow-color: rgba(201, 162, 77, 0.15);
+}
+
+/* --- CORE STYLES --- */
+* { box-sizing: border-box; margin: 0; padding: 0; transition: background 0.3s, color 0.3s, border 0.3s; }
 body {
   font-family: 'Inter', sans-serif;
-  background: #050505;
-  color: #eaeaea;
+  background: var(--bg-body);
+  color: var(--text-main);
   overflow-x: hidden;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
-}
-
-/* --- ANIMATIONS --- */
-@keyframes gradientFlow {
-  0% { background-position: 0% 50% }
-  50% { background-position: 100% 50% }
-  100% { background-position: 0% 50% }
-}
-@keyframes floatPhone {
-  0% { transform: translateY(0) }
-  50% { transform: translateY(-10px) }
-  100% { transform: translateY(0) }
-}
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(25px) }
-  to { opacity: 1; transform: translateY(0) }
 }
 
 /* --- NAVIGATION --- */
@@ -39,266 +66,204 @@ nav {
   position: fixed;
   top: 0;
   width: 100%;
-  background: rgba(0,0,0,0.95);
+  background: var(--nav-bg);
   padding: 18px 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 100;
-  border-bottom: 1px solid #111;
+  border-bottom: 1px solid var(--nav-border);
   backdrop-filter: blur(10px);
 }
+.nav-left { display: flex; align-items: center; gap: 40px; }
 .logo {
   font-weight: 900;
   font-size: 22px;
-  color: #c9a24d;
+  color: var(--accent);
   user-select: none;
+  cursor: pointer;
 }
+.nav-links { display: flex; gap: 30px; }
 .nav-links a {
-  margin-left: 28px;
   font-size: 14px;
-  color: #888;
+  color: var(--text-muted);
   text-decoration: none;
-  transition: 0.3s;
+  font-weight: 600;
 }
-.nav-links a:hover { color: #c9a24d; }
+.nav-links a:hover { color: var(--accent); }
 
-/* --- CUSTOMER VIEW (Visible by Default) --- */
-#customerView {
-    display: block; /* DEFAULT VISIBLE */
-    padding-top: 100px;
-    padding-bottom: 50px;
+/* THEME TOGGLE BUTTON */
+.theme-toggle {
+    background: transparent;
+    border: 1px solid var(--nav-border);
+    color: var(--text-main);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 18px;
 }
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
 
-.hero {
-  text-align: center;
-  animation: fadeUp .8s ease;
-  margin-bottom: 40px;
-  padding: 0 20px;
-}
-.hero p {
-  color: #c9a24d;
-  font-weight: 700;
-  margin-bottom: 10px;
-  font-size: 14px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-.hero h1 {
-  font-size: 64px;
-  font-weight: 900;
-  letter-spacing: -2px;
-  line-height: 1.1;
-}
+/* --- HERO & VISUALS --- */
+#customerView { display: block; padding-top: 100px; padding-bottom: 50px; }
 
-/* VISUAL CONTAINER */
-.visual {
-  position: relative;
-  min-height: 650px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
+.hero { text-align: center; margin-bottom: 30px; padding: 0 20px; animation: fadeUp .8s ease; }
+.hero p { color: var(--accent); font-weight: 700; margin-bottom: 10px; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; }
+.hero h1 { font-size: 64px; font-weight: 900; letter-spacing: -2px; line-height: 1.1; color: var(--hero-heading); }
+
+/* GALLERY */
+.gallery-section { padding: 20px 50px; margin-bottom: 40px; animation: fadeUp 1s ease; }
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
 }
+.gallery-item {
+    height: 200px;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+}
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; opacity: 0.8; }
+.gallery-item:hover img { transform: scale(1.05); opacity: 1; }
+
+/* PHONE SECTION */
+.visual { position: relative; min-height: 650px; display: flex; justify-content: center; align-items: center; padding: 20px; }
 .bg-text {
-  position: absolute;
-  font-size: 400px;
-  font-weight: 900;
-  color: #0d0d0d;
-  letter-spacing: -20px;
-  z-index: -1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  white-space: nowrap;
+    position: absolute;
+    font-size: 400px;
+    font-weight: 900;
+    color: var(--hero-heading);
+    opacity: 0.03;
+    letter-spacing: -20px;
+    z-index: -1;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
 }
 .wave {
-  position: absolute;
-  width: 100%;
-  height: 360px;
-  background: linear-gradient(90deg, #c9a24d, #ff2e63, #6a0dad, #c9a24d);
-  background-size: 200% 100%;
-  animation: gradientFlow 6s linear infinite;
-  mix-blend-mode: screen;
-  clip-path: path("M0,120 C200,260 420,40 700,150 C980,260 1250,70 1600,150 L1600,400 L0,400 Z");
+    position: absolute;
+    width: 100%; height: 360px;
+    background: linear-gradient(90deg, #c9a24d, #ff2e63, #6a0dad, #c9a24d);
+    background-size: 200% 100%;
+    animation: gradientFlow 6s linear infinite;
+    mix-blend-mode: screen; /* Works best in dark, subtle in light */
+    opacity: var(--wave-opacity);
+    clip-path: path("M0,120 C200,260 420,40 700,150 C980,260 1250,70 1600,150 L1600,400 L0,400 Z");
 }
 
-/* PHONE CARD */
+/* PHONE DEVICE */
 .phone {
-  width: 360px;
-  max-width: 100%;
-  background: #000;
-  border-radius: 40px;
-  padding: 12px;
-  animation: floatPhone 6s ease-in-out infinite;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
-  border: 1px solid #222;
-  position: relative;
-  z-index: 10;
+    width: 360px; max-width: 100%;
+    background: var(--card-bg);
+    border-radius: 50px; padding: 12px;
+    animation: floatPhone 6s ease-in-out infinite;
+    box-shadow: 0 30px 60px var(--shadow-color);
+    border: 1px solid var(--card-border);
+    position: relative; z-index: 10;
 }
 .screen {
-  background: #0a0a0a;
-  border-radius: 30px;
-  height: auto;
-  min-height: 550px;
-  padding: 30px 24px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
+    background: var(--screen-bg);
+    border-radius: 38px;
+    min-height: 550px;
+    padding: 30px 24px;
+    display: flex; flex-direction: column;
+    position: relative;
+    border: 1px solid var(--input-border);
 }
 
 /* INPUTS */
 input, select {
-  background: #161616;
-  border: 1px solid #222;
-  color: #fff;
-  padding: 16px;
-  border-radius: 12px;
-  margin-bottom: 16px;
-  outline: none;
-  font-family: inherit;
-  font-size: 16px;
-  width: 100%;
-  -webkit-appearance: none;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--input-text);
+    padding: 16px; border-radius: 12px; margin-bottom: 16px;
+    outline: none; font-family: inherit; font-size: 16px; width: 100%;
+    -webkit-appearance: none;
 }
-input:focus, select:focus {
-    border-color: #c9a24d;
-    background: #000;
-}
-select {
-    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23c9a24d%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-    background-repeat: no-repeat;
-    background-position: right 15px top 50%;
-    background-size: 12px auto;
-}
+input:focus, select:focus { border-color: var(--accent); }
+input::placeholder { color: var(--text-muted); }
 
 .btn-primary {
-  padding: 18px;
-  border: none;
-  border-radius: 12px;
-  background: #c9a24d;
-  color: #000;
-  font-weight: 800;
-  cursor: pointer;
-  margin-top: 20px;
-  font-size: 16px;
-  transition: 0.2s;
-  width: 100%;
+    padding: 18px; border: none; border-radius: 12px;
+    background: var(--accent); color: #fff;
+    font-weight: 800; cursor: pointer; margin-top: 20px;
+    font-size: 16px; width: 100%;
+    box-shadow: 0 10px 20px rgba(201, 162, 77, 0.2);
 }
 .btn-primary:active { transform: scale(0.96); }
 
-/* --- ADMIN TRIGGER (Hidden Button) --- */
+/* ADMIN BUTTON */
 .admin-trigger-btn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid #333;
-    color: #666;
-    font-size: 10px;
-    padding: 6px 12px;
-    border-radius: 20px;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-weight: 700;
-    transition: 0.3s;
+    position: absolute; top: 20px; right: 20px;
+    background: var(--admin-btn-bg);
+    border: 1px solid var(--input-border);
+    color: var(--admin-btn-text);
+    font-size: 10px; padding: 6px 12px; border-radius: 20px;
+    cursor: pointer; text-transform: uppercase; font-weight: 700;
 }
-.admin-trigger-btn:hover {
-    border-color: #c9a24d;
-    color: #c9a24d;
-    background: rgba(201, 162, 77, 0.1);
-}
+.admin-trigger-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-/* --- LOGIN MODAL --- */
+/* --- MODALS & ADMIN --- */
 #loginModal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.95);
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-  padding: 20px;
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(8px);
+    justify-content: center; align-items: center; z-index: 999; padding: 20px;
 }
 .login-box {
-  background: #0b0b0b;
-  padding: 30px;
-  border-radius: 24px;
-  width: 100%;
-  max-width: 350px;
-  border: 1px solid #333;
-  text-align: center;
-  box-shadow: 0 0 50px rgba(201, 162, 77, 0.1);
+    background: var(--card-bg);
+    padding: 40px 30px; border-radius: 24px; width: 100%; max-width: 350px;
+    border: 1px solid var(--card-border); text-align: center;
 }
-.login-box h3 { color: #c9a24d; margin-bottom: 24px; font-size: 20px; }
-.close-modal { margin-top: 20px; background: transparent; border: none; color: #666; cursor: pointer; text-decoration: underline; padding: 10px; }
+.login-box h3 { color: var(--accent); margin-bottom: 24px; font-size: 22px; }
+.close-modal { margin-top: 20px; background: transparent; border: none; color: var(--text-muted); cursor: pointer; text-decoration: underline; }
 
-/* --- ADMIN DASHBOARD (Hidden by Default) --- */
 #adminView {
-  display: none; /* DEFAULT HIDDEN */
-  padding-top: 100px;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding-bottom: 50px;
-  padding-left: 20px;
-  padding-right: 20px;
+    display: none; padding-top: 100px; max-width: 1000px; margin: 0 auto;
+    padding-bottom: 50px; padding-left: 20px; padding-right: 20px;
 }
-.admin-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-.admin-header h2 { font-size: 28px; color: #fff; }
-.admin-header span { color: #c9a24d; }
+.admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid var(--nav-border); padding-bottom: 20px; }
+.admin-header h2 { font-size: 28px; color: var(--hero-heading); }
 
-.admin-controls {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-}
+.admin-controls { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
 .btn-admin {
-    background: #1a1a1a;
-    color: #fff;
-    border: 1px solid #333;
-    padding: 12px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    flex: 1;
-    min-width: 120px;
-    font-size: 14px;
+    background: var(--input-bg); color: var(--text-main);
+    border: 1px solid var(--input-border); padding: 12px 20px;
+    border-radius: 8px; cursor: pointer; font-weight: 600; flex: 1; min-width: 120px;
 }
-.btn-admin:hover { background: #c9a24d; color: #000; border-color: #c9a24d; }
+.btn-admin:hover { border-color: var(--accent); color: var(--accent); }
 
 .table-container {
-    background: #0a0a0a;
-    border: 1px solid #222;
-    border-radius: 20px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 20px; overflow-x: auto;
 }
 table { width: 100%; border-collapse: collapse; min-width: 600px; }
-th, td { padding: 16px; text-align: left; border-bottom: 1px solid #1a1a1a; white-space: nowrap; }
-th { background: #111; color: #c9a24d; font-size: 12px; text-transform: uppercase; }
-td { color: #aaa; font-size: 14px; }
-.delete-btn { background: transparent; color: #ff2e63; border: 1px solid #333; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; }
+th, td { padding: 16px; text-align: left; border-bottom: 1px solid var(--nav-border); white-space: nowrap; }
+th { background: var(--input-bg); color: var(--accent); font-size: 12px; text-transform: uppercase; }
+td { color: var(--text-muted); }
 
-/* --- MOBILE RESPONSIVENESS --- */
+/* ANIMATIONS */
+@keyframes gradientFlow { 0% { background-position: 0% 50% } 50% { background-position: 100% 50% } 100% { background-position: 0% 50% } }
+@keyframes floatPhone { 0% { transform: translateY(0) } 50% { transform: translateY(-10px) } 100% { transform: translateY(0) } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(25px) } to { opacity: 1; transform: translateY(0) } }
+
+/* MOBILE */
 @media (max-width: 768px) {
     nav { padding: 15px 20px; }
     .logo { font-size: 18px; }
-    .hero h1 { font-size: 42px; letter-spacing: -1px; }
-    .hero { margin-bottom: 20px; }
+    .hero h1 { font-size: 42px; }
     .visual { padding: 10px; min-height: auto; padding-bottom: 80px; }
-    .bg-text { font-size: 150px; opacity: 0.05; }
-    .phone { width: 100%; }
-    .screen { padding: 25px 20px; min-height: auto; }
-    .admin-header h2 { font-size: 24px; }
-    .admin-controls button { font-size: 13px; padding: 10px; }
+    .bg-text { font-size: 150px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item { height: 140px; }
 }
 </style>
 </head>
@@ -306,28 +271,39 @@ td { color: #aaa; font-size: 14px; }
 <body>
 
 <nav>
-  <div class="logo">NOIR ÉLITE</div>
-  <div class="nav-links">
-    <a href="#">Menu</a>
-    <a href="#">Reserve</a>
+  <div class="nav-left">
+      <div class="logo" id="brandLogo">NOIR ÉLITE</div>
+      <div class="nav-links">
+        <a href="#">Menu</a>
+        <a href="#">Reserve</a>
+      </div>
   </div>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Switch Theme">☀</button>
 </nav>
 
 <div id="customerView">
     <section class="hero">
       <p>Michelin-Inspired Fine Dining</p>
-      <h1>Where Darkness<br>Meets Perfection</h1>
+      <h1>Where Taste<br>Meets Perfection</h1>
+    </section>
+
+    <section class="gallery-section">
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=500&auto=format&fit=crop" alt="Dining"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=500&auto=format&fit=crop" alt="Food"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1550966871-3ed3c622171c?q=80&w=500&auto=format&fit=crop" alt="Ambience"></div>
+        </div>
     </section>
 
     <section class="visual">
-      <div class="bg-text">NOIR</div>
+      <div class="bg-text" id="bgText">NOIR</div>
       <div class="wave"></div>
       <div class="phone">
         <div class="screen">
           
           <button class="admin-trigger-btn" onclick="openLogin()">Admin</button>
 
-          <h3 style="color:#c9a24d; margin-bottom: 20px; margin-top: 30px; font-weight: 800; font-size: 24px;">Reserve a Table</h3>
+          <h3 style="color:var(--accent); margin-bottom: 20px; margin-top: 30px; font-weight: 800; font-size: 24px;">Reserve a Table</h3>
           
           <input id="name" placeholder="Guest Name" autocomplete="off">
           <input id="date" type="date">
@@ -344,7 +320,7 @@ td { color: #aaa; font-size: 14px; }
 
 <div id="loginModal">
   <div class="login-box">
-    <h3>Admin Login</h3>
+    <h3>Admin Portal</h3>
     <input id="adminUser" placeholder="Username" autocomplete="off">
     <input id="adminPass" type="password" placeholder="Password">
     <button class="btn-primary" onclick="login()">Access Dashboard</button>
@@ -356,15 +332,15 @@ td { color: #aaa; font-size: 14px; }
     <div class="admin-header">
         <h2>Dashboard <span>//</span> Overview</h2>
         <div>
-            <p style="color: #666; font-size: 12px; text-align:right;">STATUS</p>
-            <p style="color: #c9a24d; font-weight:bold;">Live</p>
+            <p style="color: var(--text-muted); font-size: 12px; text-align:right;">STATUS</p>
+            <p style="color: var(--accent); font-weight:bold;">Live</p>
         </div>
     </div>
 
     <div class="admin-controls">
         <button class="btn-admin" onclick="exportCSV()">Download CSV</button>
         <button class="btn-admin" onclick="clearAll()">Clear Data</button>
-        <button class="btn-admin" onclick="logout()" style="background: #220a0a; border-color: #551111; color: #ff4444;">Logout</button>
+        <button class="btn-admin" onclick="logout()" style="border-color: #ff4444; color: #ff4444;">Logout</button>
     </div>
 
     <div class="table-container">
@@ -384,7 +360,42 @@ td { color: #aaa; font-size: 14px; }
 </div>
 
 <script>
-/* LOGIC */
+/* --- THEME LOGIC --- */
+function toggleTheme() {
+    const html = document.documentElement;
+    const logo = document.getElementById('brandLogo');
+    const bgText = document.getElementById('bgText');
+    const btn = document.querySelector('.theme-toggle');
+    
+    // Check current theme
+    const isLight = html.getAttribute('data-theme') === 'light';
+    
+    if (isLight) {
+        // Switch to Dark
+        html.removeAttribute('data-theme');
+        logo.textContent = "NOIR ÉLITE";
+        bgText.textContent = "NOIR";
+        btn.textContent = "☀"; // Sun icon for light mode option
+        localStorage.setItem('theme', 'dark');
+    } else {
+        // Switch to Light
+        html.setAttribute('data-theme', 'light');
+        logo.textContent = "BLANC ÉLITE";
+        bgText.textContent = "BLANC";
+        btn.textContent = "☾"; // Moon icon for dark mode option
+        localStorage.setItem('theme', 'light');
+    }
+}
+
+// Load Theme Preference on Start
+(function loadTheme(){
+    const savedTheme = localStorage.getItem('theme');
+    if(savedTheme === 'light'){
+        toggleTheme(); // Apply light mode if saved
+    }
+})();
+
+/* --- BOOKING LOGIC --- */
 let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
 const ADMIN_USER="admin";
 const ADMIN_PASS="noirelite";
@@ -400,18 +411,9 @@ function addBooking(){
   const timeVal = document.getElementById("time").value;
   const guestCount = document.getElementById("guests").value;
 
-  if(!guestName || !dateVal) { 
-      alert("Please enter details first."); 
-      return; 
-  }
+  if(!guestName || !dateVal) { alert("Please enter details first."); return; }
 
-  bookings.push({
-    name: guestName,
-    date: dateVal,
-    time: timeVal,
-    guests: guestCount
-  });
-
+  bookings.push({ name: guestName, date: dateVal, time: timeVal, guests: guestCount });
   localStorage.setItem("bookings", JSON.stringify(bookings));
   alert("Reservation Confirmed!");
   
@@ -420,27 +422,18 @@ function addBooking(){
   document.getElementById("time").value = "";
 }
 
-function openLogin(){ 
-    loginModal.style.display="flex"; 
-}
-
-function closeLogin(){
-    loginModal.style.display="none";
-    document.getElementById("adminPass").value = ""; 
-}
+function openLogin(){ loginModal.style.display="flex"; }
+function closeLogin(){ loginModal.style.display="none"; document.getElementById("adminPass").value = ""; }
 
 function login(){
   const u = document.getElementById("adminUser").value;
   const p = document.getElementById("adminPass").value;
-
   if(u===ADMIN_USER && p===ADMIN_PASS){
     loginModal.style.display="none"; 
     customerView.style.display="none";
     adminView.style.display="block";
     renderAdmin(); 
-  } else {
-    alert("Wrong Password!");
-  }
+  } else { alert("Wrong Password!"); }
 }
 
 function logout(){
@@ -455,17 +448,17 @@ function logout(){
 function renderAdmin(){
   adminTable.innerHTML="";
   if(bookings.length===0){
-    adminTable.innerHTML="<tr><td colspan='5' style='text-align:center; padding: 30px; color:#555;'>No bookings yet.</td></tr>";
+    adminTable.innerHTML="<tr><td colspan='5' style='text-align:center; padding: 30px; opacity:0.5;'>No bookings yet.</td></tr>";
     return;
   }
   bookings.forEach((b,i)=>{
     adminTable.innerHTML+=`
     <tr>
-      <td style="color:#fff; font-weight:600">${b.name}</td>
+      <td style="font-weight:700; color:var(--text-main)">${b.name}</td>
       <td>${b.date}</td>
       <td>${b.time}</td>
       <td>${b.guests}</td>
-      <td style="text-align: right;"><button class="delete-btn" onclick="deleteBooking(${i})">Remove</button></td>
+      <td style="text-align: right;"><button class="admin-trigger-btn" style="position:static; border-color:#ff4444; color:#ff4444;" onclick="deleteBooking(${i})">Remove</button></td>
     </tr>`;
   });
 }
@@ -489,7 +482,7 @@ function exportCSV(){
   bookings.forEach(b=>csv+=`${b.name},${b.date},${b.time},${b.guests}\n`);
   const a=document.createElement("a");
   a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
-  a.download="noir_elite_bookings.csv";
+  a.download="bookings.csv";
   a.click();
 }
 </script>
