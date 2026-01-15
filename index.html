@@ -360,6 +360,35 @@ td { color: var(--text-muted); }
 </div>
 
 <script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+<script>
+  // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAckgNUOdNKtZdqrPftCf9_GS20BaJx-Ak",
+  authDomain: "clee-865bd.firebaseapp.com",
+  projectId: "clee-865bd",
+  storageBucket: "clee-865bd.firebasestorage.app",
+  messagingSenderId: "13100635021",
+  appId: "1:13100635021:web:445bd83dcb9e210bffa3c4"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+  firebase.initializeApp(firebaseConfig);
+
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+</script>
+
 /* --- THEME LOGIC --- */
 function toggleTheme() {
     const html = document.documentElement;
@@ -489,3 +518,4 @@ function exportCSV(){
 
 </body>
 </html>
+
